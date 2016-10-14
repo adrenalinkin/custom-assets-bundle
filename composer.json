@@ -1,0 +1,32 @@
+{
+    "name":        "adrenalinkin/custom-assets-bundle",
+    "description": "This bundle provides creating assets from the custom sources. Work like an assets:install",
+    "type":        "symfony-bundle",
+    "keywords":    ["custom-assets", "folder", "assets", "symfony2", "bundle"],
+    "license":     "MIT",
+
+    "authors": [
+        {
+            "email": "adrenalinkin@gmail.com",
+            "name":  "Viktor Linkin",
+            "role":  "Developer"
+        }
+    ],
+
+    "require": {
+        "adrenalinkin/enum-mapper":      "dev-master",
+        "php":                        "~5.4",
+        "sensio/distribution-bundle": "~3.0",
+        "symfony/framework-bundle":   "2.5.*"
+    },
+
+    "suggest": {
+        "symfony/symfony": "Allows more advanced functionality with full Symfony package"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Linkin\\Bundle\\CustomAssetsBundle\\": ""
+        }
+    }
+}
