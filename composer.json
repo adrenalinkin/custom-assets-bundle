@@ -14,7 +14,6 @@
     ],
 
     "require": {
-        "adrenalinkin/enum-mapper":   "dev-master",
         "php":                        ">=5.4",
         "sensio/distribution-bundle": ">=3,<5",
         "symfony/framework-bundle":   "~2.5"
