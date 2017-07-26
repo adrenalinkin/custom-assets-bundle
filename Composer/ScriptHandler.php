@@ -2,20 +2,25 @@
 
 namespace Linkin\Bundle\CustomAssetsBundle\Composer;
 
+use Composer\Plugin\CommandEvent;
 use Composer\Script\Event;
-
-use Sensio\Bundle\DistributionBundle\Composer\ScriptHandler as Handler;
 
 /**
  * @author Viktor Linkin <adrenalinkin@gmail.com>
  */
-class ScriptHandler extends Handler
+class ScriptHandler extends \Sensio\Bundle\DistributionBundle\Composer\ScriptHandler
 {
     /**
-     * @param Event $event
+     * @param Event|CommandEvent $event
      */
-    public static function installCustomAssets(Event $event)
+    public static function installCustomAssets($event)
     {
+        if (!$event instanceof Event && !$event instanceof CommandEvent) {
+            throw new \RuntimeException(
+                'event should be an instance of \Composer\Plugin\CommandEvent or \Composer\Script\Event'
+            );
+        }
+
         $options    = static::getOptions($event);
         $consoleDir = static::getConsoleDir($event, 'install custom assets');
 
