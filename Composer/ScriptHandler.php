@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the LinkinCustomAssetsBundle package.
+ *
+ * (c) Viktor Linkin <adrenalinkin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Linkin\Bundle\CustomAssetsBundle\Composer;
 
 use Composer\Plugin\CommandEvent;
@@ -31,9 +40,9 @@ class ScriptHandler extends \Sensio\Bundle\DistributionBundle\Composer\ScriptHan
         $webDir  = $options['symfony-web-dir'];
         $symlink = '';
 
-        if ($options['symfony-assets-install'] == 'symlink') {
+        if ($options['symfony-assets-install'] === 'symlink') {
             $symlink = '--symlink ';
-        } elseif ($options['symfony-assets-install'] == 'relative') {
+        } elseif ($options['symfony-assets-install'] === 'relative') {
             $symlink = '--symlink --relative ';
         }
 
@@ -44,7 +53,7 @@ class ScriptHandler extends \Sensio\Bundle\DistributionBundle\Composer\ScriptHan
         static::executeCommand(
             $event,
             $consoleDir,
-            'custom_assets:install ' . $symlink . escapeshellarg($webDir),
+            'custom_assets:install '.$symlink.escapeshellarg($webDir),
             $options['process-timeout']
         );
     }

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the LinkinCustomAssetsBundle package.
+ *
+ * (c) Viktor Linkin <adrenalinkin@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Linkin\Bundle\CustomAssetsBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -14,6 +23,9 @@ use Symfony\Component\Finder\Finder;
  */
 class CustomAssetsInstallCommand extends ContainerAwareCommand
 {
+    /**
+     * Console command name
+     */
     const NAME = 'custom_assets:install';
 
     /**
@@ -23,14 +35,14 @@ class CustomAssetsInstallCommand extends ContainerAwareCommand
     {
         $this
             ->setName(self::NAME)
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('target', InputArgument::OPTIONAL, 'The target directory', 'web'),
-            ))
+            ])
             ->addOption('symlink', null, InputOption::VALUE_NONE, 'Symlinks the components instead of copying it')
             ->addOption('relative', null, InputOption::VALUE_NONE, 'Make relative symlinks')
             ->setDescription(
-                'Installs web assets under a public web directory from the custom places.' .
-                'Work a same as the standard Symfony <info>assets:install</info> command'
+                'Installs web assets under a public web directory from the custom places.
+                Work a same as the standard Symfony <info>assets:install</info> command'
             );
     }
 
@@ -48,13 +60,13 @@ class CustomAssetsInstallCommand extends ContainerAwareCommand
 
         if ($input->getOption('symlink') && !function_exists('symlink')) {
             throw new \InvalidArgumentException(
-                'The symlink() function is not available on your system. '.
-                'You need to install the assets without the --symlink option.'
+                'The symlink() function is not available on your system. 
+                You need to install the assets without the --symlink option.'
             );
         }
 
         $filesystem      = $this->getContainer()->get('filesystem');
-        $customAssetsDir = $target . $DS . 'custom_assets';
+        $customAssetsDir = $target.$DS.'custom_assets';
         $isSymlink       = $input->getOption('symlink');
         $isRelative      = $input->getOption('relative');
 
@@ -64,7 +76,7 @@ class CustomAssetsInstallCommand extends ContainerAwareCommand
             $output->writeln('<info>Directory for the custom assets has been created.</info>');
         }
 
-        $output->write('Custom assets will be installed under the <comment>' . $customAssetsDir . '</comment>');
+        $output->write(sprintf('Custom assets will be installed under the <comment>%s</comment>', $customAssetsDir));
 
         if ($isSymlink) {
             $output->write(' as <comment>symlinks</comment>');
@@ -84,7 +96,7 @@ class CustomAssetsInstallCommand extends ContainerAwareCommand
                 continue;
             }
 
-            $targetDir = $customAssetsDir . $DS . $name;
+            $targetDir = $customAssetsDir.$DS.$name;
 
             $output->writeln(sprintf(
                 'Installing custom assets named as <comment>%s</comment> into <comment>%s</comment> directory',
