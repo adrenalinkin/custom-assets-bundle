@@ -43,7 +43,8 @@ class CustomAssetsInstallCommand extends ContainerAwareCommand
             ->setDescription(
                 'Installs web assets under a public web directory from the custom places.
                 Work a same as the standard Symfony <info>assets:install</info> command'
-            );
+            )
+        ;
     }
 
     /**
