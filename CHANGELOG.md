@@ -1,3 +1,9 @@
+## [Unreleased]
+### Added
+- Added possibility to register custom assets in the separate file `custom_assets.yml`.
+### Changed
+- Approved support of the Symfony 3.
+
 ## [1.0.4] - 2017-12-06
 ### Changed
 - Approved support of the Symfony `2.8`.

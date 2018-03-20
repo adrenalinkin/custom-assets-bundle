@@ -20,6 +20,8 @@ use Composer\Script\Event;
 class ScriptHandler extends \Sensio\Bundle\DistributionBundle\Composer\ScriptHandler
 {
     /**
+     * Installs the assets under the web root directory.
+     *
      * @param Event|CommandEvent $event
      */
     public static function installCustomAssets($event)

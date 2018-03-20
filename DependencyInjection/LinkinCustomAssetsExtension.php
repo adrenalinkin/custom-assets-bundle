@@ -11,23 +11,41 @@
 
 namespace Linkin\Bundle\CustomAssetsBundle\DependencyInjection;
 
+use Linkin\Component\ConfigHelper\Extension\AbstractExtension;
+
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * @author Viktor Linkin <adrenalinkin@gmail.com>
  */
-class LinkinCustomAssetsExtension extends Extension
+class LinkinCustomAssetsExtension extends AbstractExtension
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return 'linkin_custom_assets';
+    }
+
     /**
      * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $config       = $this->processConfiguration(new Configuration(), $configs);
+        // Load configuration from the bundles
+        $configFromBundles = $this->getConfigurationsFromFile('custom_assets.yml', $container, false);
+
+        // Merge with global configuration (global configuration have higher priority)
+        $config = array_merge($configFromBundles, $configs);
+
+        // Process configurations into final representation
+        $config = $this->processConfiguration(new Configuration(), $config);
+
+        // Prepare sources and get list of the incorrect sources
         $wrongSources = $this->prepareSources($container, $config['sources']);
 
         if (!empty($wrongSources)) {
@@ -45,6 +63,8 @@ class LinkinCustomAssetsExtension extends Extension
     }
 
     /**
+     * Returns safety path
+     *
      * @param string $path
      *
      * @return mixed|string
@@ -55,10 +75,12 @@ class LinkinCustomAssetsExtension extends Extension
     }
 
     /**
-     * @param ContainerBuilder $container
-     * @param array            $sources
+     * Process received sources by adding kernel.root_dir and returns list of the wrong sources
      *
-     * @return array
+     * @param ContainerBuilder $container Instance of the ContainerBuilder
+     * @param array            $sources   List of the configured sources
+     *
+     * @return array List of the wrong sources
      */
     private function prepareSources(ContainerBuilder $container, array &$sources)
     {

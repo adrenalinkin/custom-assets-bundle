@@ -1,8 +1,8 @@
 {
     "name":        "adrenalinkin/custom-assets-bundle",
-    "description": "This bundle provides creating assets from the custom sources. Work like an assets:install",
+    "description": "Provides creating assets from the custom sources. Work like an assets:install",
     "type":        "symfony-bundle",
-    "keywords":    ["custom-assets", "folder", "assets", "symfony2", "bundle"],
+    "keywords":    ["custom-assets", "assets", "symfony-bundle", "yaml"],
     "license":     "MIT",
 
     "authors": [
@@ -14,9 +14,10 @@
     ],
 
     "require": {
-        "php":                        "~5.6",
+        "adrenalinkin/config-helper": "~1.0,>=1.0.5",
+        "php":                        "~5.6||~7.0",
         "sensio/distribution-bundle": "~3.0||~4.0||~5.0",
-        "symfony/framework-bundle":   "~2.5,<2.9"
+        "symfony/framework-bundle":   "~2.5||~3.0"
     },
 
     "suggest": {
